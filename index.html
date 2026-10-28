@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Amigo Navideño 🎄</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#06100a;
+      --sur:#0e1f12;--sur2:#152418;
+      --bor:rgba(255,255,255,.09);
+      --a1:#4ade80;--a2:#f59e0b;--a3:#ef4444;
+      --gold:#fbbf24;--txt:#e8f5e9;--mut:#6b8f71;
+      --err:#f87171;--ok:#4ade80;
+    }
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
+
+    /* ── Fondo navideño ── */
+    body::before{content:'';position:fixed;inset:0;background:
+      radial-gradient(ellipse 80% 55% at 15% 5%,rgba(74,222,128,.13),transparent 55%),
+      radial-gradient(ellipse 65% 50% at 85% 85%,rgba(239,68,68,.10),transparent 55%),
+      radial-gradient(ellipse 55% 45% at 50% 50%,rgba(245,158,11,.08),transparent 60%);
+      pointer-events:none;z-index:0}
+
+    /* ── Copos de nieve animados ── */
+    .snow{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+    .flake{position:absolute;top:-20px;color:#fff;opacity:0;font-size:1rem;animation:snowfall linear infinite}
+    @keyframes snowfall{
+      0%  {opacity:.7;transform:translateY(-20px) rotate(0deg)}
+      100%{opacity:0; transform:translateY(100vh)  rotate(360deg)}
+    }
+
+    .app{position:relative;z-index:1}
+    .view{display:none}
+    .view.on{display:block;animation:fi .4s ease}
+    @keyframes fi{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── Header ── */
+    header{text-align:center;padding:56px 24px 30px;position:relative}
+    .xmas-dec{font-size:1.6rem;letter-spacing:6px;margin-bottom:10px;display:block}
+    .logo{font-size:clamp(1.9rem,6vw,3.2rem);font-weight:900;
+      background:linear-gradient(135deg,#4ade80,#fbbf24,#ef4444);
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px}
+    .logo-sub{margin-top:8px;color:var(--mut);font-size:.92rem}
+    .lights{display:flex;justify-content:center;gap:6px;margin-top:18px;flex-wrap:wrap}
+    .bulb{width:10px;height:14px;border-radius:50% 50% 40% 40%;animation:glow 1.8s ease-in-out infinite alternate}
+    .bulb:nth-child(1){background:#ef4444;animation-delay:0s}
+    .bulb:nth-child(2){background:#4ade80;animation-delay:.2s}
+    .bulb:nth-child(3){background:#fbbf24;animation-delay:.4s}
+    .bulb:nth-child(4){background:#60a5fa;animation-delay:.6s}
+    .bulb:nth-child(5){background:#ef4444;animation-delay:.8s}
+    .bulb:nth-child(6){background:#4ade80;animation-delay:1s}
+    .bulb:nth-child(7){background:#fbbf24;animation-delay:1.2s}
+    .bulb:nth-child(8){background:#60a5fa;animation-delay:1.4s}
+    .bulb:nth-child(9){background:#ef4444;animation-delay:.3s}
+    .bulb:nth-child(10){background:#4ade80;animation-delay:.9s}
+    .bulb:nth-child(11){background:#fbbf24;animation-delay:.1s}
+    .bulb:nth-child(12){background:#60a5fa;animation-delay:.7s}
+    @keyframes glow{
+      from{opacity:.35;box-shadow:0 0 4px currentColor}
+      to  {opacity:1;  box-shadow:0 0 10px 3px currentColor}
+    }
+
+    /* ── Container / Card ── */
+    .container{max-width:660px;margin:0 auto;padding:0 20px 80px}
+    .card{background:var(--sur);border:1px solid var(--bor);border-radius:16px;padding:26px;margin-bottom:18px;
+      box-shadow:0 2px 20px rgba(0,0,0,.35)}
+    .card-title{font-size:.97rem;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--txt)}
+
+    /* ── Input / Buttons ── */
+    .row{display:flex;gap:10px}
+    input[type=text]{flex:1;background:var(--sur2);border:1px solid var(--bor);border-radius:10px;color:var(--txt);font-family:inherit;font-size:.95rem;padding:11px 15px;outline:none;transition:border-color .2s,box-shadow .2s}
+    input[type=text]::placeholder{color:var(--mut)}
+    input[type=text]:focus{border-color:var(--a1);box-shadow:0 0 0 3px rgba(74,222,128,.18)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:10px;cursor:pointer;font-family:inherit;font-size:.9rem;font-weight:600;padding:11px 18px;transition:all .2s;white-space:nowrap}
+    .btn:active{transform:scale(.96)}
+    .btn-p{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;box-shadow:0 4px 18px rgba(22,163,74,.35)}
+    .btn-p:hover{filter:brightness(1.12)}
+    .btn-g{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;box-shadow:0 4px 18px rgba(245,158,11,.32)}
+    .btn-g:hover{filter:brightness(1.1)}
+    .btn-ghost{background:transparent;border:1px solid var(--bor);color:var(--mut)}
+    .btn-ghost:hover{border-color:var(--a1);color:var(--a1)}
+    .btn-err{background:transparent;border:1px solid rgba(248,113,113,.3);color:var(--err)}
+    .btn-err:hover{background:rgba(248,113,113,.1)}
+    .btn-sm{padding:7px 13px;font-size:.82rem}
+    .btn-full{width:100%}
+
+    /* ── Participant list ── */
+    .plist{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
+    .pitem{display:flex;align-items:center;gap:11px;background:var(--sur2);border:1px solid var(--bor);border-radius:10px;padding:11px 13px;animation:si .22s ease}
+    @keyframes si{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+    .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#16a34a,#15803d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:#fff;flex-shrink:0}
+    .pname{flex:1;font-weight:500;font-size:.95rem}
+    .empty{text-align:center;padding:36px 20px;color:var(--mut)}
+    .empty span{font-size:2.4rem;display:block;margin-bottom:10px}
+
+    /* ── Links ── */
+    .link-item{display:flex;align-items:center;gap:9px;background:var(--sur2);border:1px solid var(--bor);border-radius:10px;padding:11px 13px;margin-bottom:9px;transition:border-color .2s}
+    .link-item:hover{border-color:rgba(74,222,128,.4)}
+    .link-giver{font-weight:600;font-size:.9rem;flex:0 0 110px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+    .link-url{flex:1;font-size:.72rem;color:var(--mut);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:monospace}
+    .divider{border:none;border-top:1px solid var(--bor);margin:18px 0}
+    .alert{border-radius:10px;padding:11px 15px;font-size:.865rem;font-weight:500;margin-bottom:14px;line-height:1.5}
+    .al-info{background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:#86efac}
+    .al-warn{background:rgba(251,191,36,.09);border:1px solid rgba(251,191,36,.28);color:#fcd34d}
+    .badge{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-size:.73rem;font-weight:700;padding:3px 9px;border-radius:99px;margin-left:auto}
+    .err-msg{color:var(--err);font-size:.82rem;margin-top:7px;display:none}
+
+    /* ── Steps ── */
+    .steps{display:flex;margin-bottom:28px}
+    .step{flex:1;text-align:center;position:relative}
+    .step::after{content:'';position:absolute;top:17px;left:50%;width:100%;height:2px;background:var(--bor);z-index:0}
+    .step:last-child::after{display:none}
+    .sdot{width:34px;height:34px;border-radius:50%;background:var(--sur2);border:2px solid var(--bor);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700;margin:0 auto 5px;position:relative;z-index:1;transition:all .3s}
+    .step.active .sdot{background:linear-gradient(135deg,#16a34a,#15803d);border-color:transparent;color:#fff;box-shadow:0 0 18px rgba(22,163,74,.45)}
+    .step.done .sdot{background:var(--gold);border-color:transparent;color:#fff}
+    .slabel{font-size:.7rem;color:var(--mut);font-weight:500}
+    .step.active .slabel{color:var(--a1)}
+
+    /* ════ REVEAL ════ */
+    .reveal-wrap{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 20px;text-align:center}
+    .rcard{background:var(--sur);border:1px solid rgba(74,222,128,.2);border-radius:24px;padding:46px 38px;max-width:420px;width:100%;position:relative;overflow:hidden;
+      box-shadow:0 0 60px rgba(22,163,74,.15),0 2px 30px rgba(0,0,0,.5)}
+    /* Glows navideños */
+    .rcard::before{content:'';position:absolute;top:-60px;left:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(74,222,128,.25),transparent 70%);pointer-events:none}
+    .rcard::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(239,68,68,.18),transparent 70%);pointer-events:none}
+
+    .r-xmas{font-size:1.4rem;letter-spacing:4px;margin-bottom:8px}
+    .r-hello{font-size:.88rem;color:var(--mut);margin-bottom:4px}
+    .r-who{font-size:1.55rem;font-weight:800;background:linear-gradient(135deg,#4ade80,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:24px}
+    .r-q{font-size:.92rem;color:var(--mut);margin-bottom:14px}
+    .gift{border:none;background:none;cursor:pointer;font-size:5.2rem;line-height:1;transition:transform .35s cubic-bezier(.34,1.56,.64,1);display:block;margin:0 auto 16px;filter:drop-shadow(0 5px 22px rgba(239,68,68,.5))}
+    .gift:hover{transform:scale(1.14) rotate(-6deg)}
+    .gift.shake{animation:shk .5s ease}
+    @keyframes shk{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-9deg) scale(1.06)}40%{transform:rotate(9deg) scale(1.11)}60%{transform:rotate(-6deg) scale(1.08)}80%{transform:rotate(4deg) scale(1.05)}}
+    .r-hint{font-size:.8rem;color:var(--mut)}
+    .r-reveal{display:none}
+    .r-reveal.show{display:block;animation:pop .5s cubic-bezier(.34,1.56,.64,1)}
+    @keyframes pop{from{opacity:0;transform:scale(.45)}to{opacity:1;transform:scale(1)}}
+    .r-confetti{font-size:1.5rem;letter-spacing:5px;margin-bottom:18px}
+    .r-label{font-size:.8rem;color:var(--mut);text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+    .r-name{font-size:clamp(2rem,9vw,3.1rem);font-weight:900;background:linear-gradient(135deg,#fbbf24,#ef4444,#4ade80);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-1px;line-height:1.1;margin-bottom:14px}
+    .r-note{font-size:.78rem;color:var(--mut);margin-top:22px;padding-top:22px;border-top:1px solid var(--bor);line-height:1.6}
+
+    /* Toast */
+    #toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(18px);background:var(--sur2);border:1px solid var(--bor);color:var(--txt);padding:11px 22px;border-radius:99px;font-size:.86rem;font-weight:500;opacity:0;pointer-events:none;transition:all .28s;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+    @media(max-width:480px){.card{padding:18px}.rcard{padding:30px 20px}.row{flex-direction:column}.slabel{display:none}}
+  </style>
+</head>
+<body>
+
+<!-- Copos de nieve -->
+<div class="snow" id="snow"></div>
+
+<div class="app">
+
+<!-- ══════════════════ ADMIN VIEW ══════════════════ -->
+<div class="view on" id="v-admin">
+  <header>
+    <span class="xmas-dec">🎄✨🎅✨🎄</span>
+    <div class="logo">Amigo Navideño</div>
+    <p class="logo-sub">Registra los participantes y genera links individuales para cada uno</p>
+    <div class="lights">
+      <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+      <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+      <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+      <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+    </div>
+  </header>
+  <div class="container">
+
+    <div class="steps">
+      <div class="step active" id="s1"><div class="sdot">1</div><div class="slabel">Nombres</div></div>
+      <div class="step" id="s2"><div class="sdot">2</div><div class="slabel">Sortear</div></div>
+      <div class="step" id="s3"><div class="sdot">3</div><div class="slabel">Links</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🎅 Participantes <span class="badge" id="cnt">0</span></div>
+      <div class="row">
+        <input type="text" id="ninput" placeholder="Nombre del participante…" maxlength="45" autocomplete="off"/>
+        <button class="btn btn-p" onclick="addName()">➕ Agregar</button>
+      </div>
+      <div class="err-msg" id="nerr"></div>
+      <ul class="plist" id="plist"></ul>
+      <div class="empty" id="pempty">
+        <span>⛄</span>
+        <p>Agrega al menos 2 participantes para continuar</p>
+      </div>
+    </div>
+
+    <div class="card" id="c-draw" style="display:none">
+      <div class="card-title">🎲 Realizar el sorteo</div>
+      <p style="color:var(--mut);font-size:.88rem;margin-bottom:16px;line-height:1.6">
+        Al sortear, cada persona recibe un amigo navideño diferente. Nadie se puede sacar a sí mismo. Luego envía el link personal a cada uno.
+      </p>
+      <div class="al-warn alert" id="redraw-warn" style="display:none">
+        ⚠️ Ya hay un sorteo activo. Si vuelves a sortear se invalidarán los links anteriores.
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-g" onclick="draw()">🎲 Sortear ahora</button>
+        <button class="btn btn-ghost btn-sm" onclick="resetAll()">🗑 Reiniciar todo</button>
+      </div>
+    </div>
+
+    <div class="card" id="c-links" style="display:none">
+      <div class="card-title">🔗 Links para compartir</div>
+      <div class="al-info alert">
+        📲 Envía el link que le corresponde a cada persona. Al abrirlo en <strong>cualquier dispositivo</strong>, verán su amigo navideño al presionar el regalo. ¡El link funciona en el celular de cada uno!
+      </div>
+      <div id="llist"></div>
+      <hr class="divider"/>
+      <button class="btn btn-ghost btn-full" onclick="copyAll()">📋 Copiar todos los links de una vez</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════ REVEAL VIEW ══════════════════ -->
+<div class="view" id="v-reveal">
+  <div class="reveal-wrap">
+    <div class="rcard">
+      <div id="r-load"><div style="font-size:2.2rem;margin-bottom:12px">⏳</div><p style="color:var(--mut)">Cargando…</p></div>
+
+      <div id="r-err" style="display:none">
+        <div style="font-size:2.5rem;margin-bottom:14px">😕</div>
+        <div class="r-who" style="font-size:1.2rem">Link inválido</div>
+        <p style="color:var(--mut);font-size:.9rem">Este link no es válido o fue generado con un sorteo anterior.</p>
+      </div>
+
+      <div id="r-main" style="display:none">
+        <div class="r-xmas">🎄🎁🦌</div>
+        <div class="r-hello">¡Hola,</div>
+        <div class="r-who" id="r-giver">—</div>
+        <div class="r-q" id="r-q">¿Listo para descubrir a quién le vas a dar un regalo navideño? 🎅</div>
+        <button class="gift" id="giftbtn" onclick="doReveal()">🎁</button>
+        <p class="r-hint" id="r-hint">Presiona el regalo para revelar</p>
+        <div class="r-reveal" id="r-reveal">
+          <div class="r-confetti">🎄🎉🎊🎁✨</div>
+          <div class="r-label">Tu amigo navideño es</div>
+          <div class="r-name" id="r-name">—</div>
+          <div class="r-note">
+            🎅 <strong>¡Feliz Navidad!</strong><br>
+            Prepara un regalo especial para esta persona.<br>
+            <span style="font-size:.72rem;color:var(--mut)">Si cierras el link podrás volver a verlo cuando quieras.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div id="toast"></div>
+
+<script>
+// ── Copos de nieve ──────────────────────────────
+(function(){
+  const snow=document.getElementById('snow');
+  const flakes=['❄','❅','❆','*'];
+  for(let i=0;i<28;i++){
+    const f=document.createElement('span');
+    f.className='flake';
+    f.textContent=flakes[i%flakes.length];
+    f.style.left=Math.random()*100+'vw';
+    f.style.fontSize=(0.6+Math.random()*0.9)+'rem';
+    f.style.animationDuration=(6+Math.random()*10)+'s';
+    f.style.animationDelay=(Math.random()*10)+'s';
+    snow.appendChild(f);
+  }
+})();
+
+// ── Core ────────────────────────────────────────
+const $=s=>document.getElementById(s);
+function getNames(){return JSON.parse(localStorage.getItem('an_names')||'[]')}
+function saveNames(a){localStorage.setItem('an_names',JSON.stringify(a))}
+function getDrawMap(){return JSON.parse(localStorage.getItem('an_draw')||'null')}
+
+function getPayload(){
+  const h=location.hash;
+  if(!h.startsWith('#p='))return null;
+  try{return JSON.parse(atob(h.slice(3)))}catch{return null}
+}
+
+function toast(m,d=2600){const el=$('toast');el.textContent=m;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),d)}
+
+// ── Admin render ─────────────────────────────────
+function render(){
+  const names=getNames();
+  const hasDraw=!!localStorage.getItem('an_draw');
+  $('cnt').textContent=names.length;
+  const ul=$('plist');
+  ul.innerHTML='';
+  $('pempty').style.display=names.length?'none':'block';
+  names.forEach(n=>{
+    const li=document.createElement('li');
+    li.className='pitem';
+    const init=n.split(' ').map(w=>w[0]||'').join('').slice(0,2).toUpperCase();
+    li.innerHTML=`<div class="avatar">${init}</div><span class="pname">${esc(n)}</span>${!hasDraw?`<button class="btn btn-err btn-sm" onclick="removeName(this)" data-n="${esc(n)}">✕</button>`:''}`;
+    ul.appendChild(li);
+  });
+  $('c-draw').style.display=names.length>=2?'block':'none';
+  $('redraw-warn').style.display=hasDraw?'block':'none';
+  const drawData=localStorage.getItem('an_draw');
+  if(hasDraw&&drawData){
+    $('c-links').style.display='block';
+    renderLinks(names,JSON.parse(drawData));
+    setStep(3);
+  } else {
+    $('c-links').style.display='none';
+    setStep(names.length>=2?2:1);
+  }
+}
+
+function setStep(n){
+  [1,2,3].forEach(i=>{
+    const el=$('s'+i);
+    el.className='step'+(i<n?' done':i===n?' active':'');
+    el.querySelector('.sdot').textContent=i<n?'✓':i;
+  });
+}
+
+function renderLinks(names,drawMap){
+  const base=location.href.split('#')[0];
+  const c=$('llist');c.innerHTML='';
+  names.forEach(n=>{
+    const receiver=drawMap[n];
+    if(!receiver)return;
+    const payload=btoa(JSON.stringify({g:n,r:receiver,id:drawMap.__id}));
+    const url=base+'#p='+payload;
+    const d=document.createElement('div');
+    d.className='link-item';
+    d.innerHTML=`<span class="link-giver" title="${esc(n)}">${esc(n)}</span><span class="link-url">${url}</span><button class="btn btn-ghost btn-sm" onclick="copyLink('${url.replace(/'/g,"\\'")}','${esc(n)}')">📋 Copiar</button>`;
+    c.appendChild(d);
+  });
+}
+
+// ── Admin actions ────────────────────────────────
+function addName(){
+  const inp=$('ninput');const n=inp.value.trim();const err=$('nerr');
+  err.style.display='none';
+  if(!n)return;
+  const names=getNames();
+  if(names.some(x=>x.toLowerCase()===n.toLowerCase())){err.textContent='Ese nombre ya está en la lista.';err.style.display='block';return}
+  if(names.length>=60){err.textContent='Máximo 60 participantes.';err.style.display='block';return}
+  names.push(n);saveNames(names);inp.value='';inp.focus();render();
+}
+
+function removeName(btn){
+  const n=btn.getAttribute('data-n');
+  saveNames(getNames().filter(x=>x!==n));render();
+}
+
+function draw(){
+  const names=getNames();if(names.length<2)return;
+  let res,tries=0;
+  do{
+    res=[...names];
+    for(let i=res.length-1;i>0;i--){const j=0|Math.random()*(i+1);[res[i],res[j]]=[res[j],res[i]]}
+    tries++;
+  }while(names.some((n,i)=>n===res[i])&&tries<1000);
+  const id=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  const map={__id:id};
+  names.forEach((n,i)=>{map[n]=res[i]});
+  localStorage.setItem('an_draw',JSON.stringify(map));
+  toast('🎄 ¡Sorteo navideño listo! Comparte cada link.');
+  render();
+}
+
+function resetAll(){
+  if(!confirm('¿Reiniciar todo? Se borrarán los participantes y el sorteo.'))return;
+  localStorage.removeItem('an_names');localStorage.removeItem('an_draw');
+  render();toast('Reiniciado. ¡Feliz Navidad! 🎄');
+}
+
+function copyLink(url,name){
+  navigator.clipboard.writeText(url)
+    .then(()=>toast('✅ Link de '+name+' copiado'))
+    .catch(()=>toast('❌ No se pudo copiar'));
+}
+
+function copyAll(){
+  const names=getNames();const draw=getDrawMap();if(!draw)return;
+  const base=location.href.split('#')[0];
+  const text=names.map(n=>{
+    const payload=btoa(JSON.stringify({g:n,r:draw[n],id:draw.__id}));
+    return n+': '+base+'#p='+payload;
+  }).join('\n');
+  navigator.clipboard.writeText(text)
+    .then(()=>toast('📋 Todos los links copiados'))
+    .catch(()=>toast('❌ No se pudo copiar'));
+}
+
+// ── Reveal ───────────────────────────────────────
+function initReveal(payload){
+  showView('v-reveal');
+  $('r-load').style.display='block';$('r-err').style.display='none';$('r-main').style.display='none';
+  if(!payload||!payload.g||!payload.r){$('r-load').style.display='none';$('r-err').style.display='block';return}
+  const{g,r,id}=payload;
+  $('r-load').style.display='none';
+  $('r-giver').textContent=g;
+  $('giftbtn').dataset.rec=r;
+  $('giftbtn').dataset.sk='an_rv_'+id+'_'+btoa(encodeURIComponent(g));
+  const sk='an_rv_'+id+'_'+btoa(encodeURIComponent(g));
+  if(localStorage.getItem(sk)==='1'){
+    $('r-q').style.display='none';$('giftbtn').style.display='none';$('r-hint').style.display='none';
+    $('r-name').textContent=r;$('r-reveal').classList.add('show');
+  }
+  $('r-main').style.display='block';
+}
+
+function doReveal(){
+  const btn=$('giftbtn');const rec=btn.dataset.rec;const sk=btn.dataset.sk;
+  localStorage.setItem(sk,'1');
+  btn.classList.add('shake');btn.textContent='🎀';
+  setTimeout(()=>{
+    btn.style.display='none';$('r-q').style.display='none';$('r-hint').style.display='none';
+    $('r-name').textContent=rec;$('r-reveal').classList.add('show');
+    xmasConfetti();
+  },580);
+}
+
+function xmasConfetti(){
+  const ems=['🎄','🎉','🎊','⭐','❄','🎅','🦌','🎁','✨','🌟','🧨'];
+  for(let i=0;i<26;i++){
+    const el=document.createElement('div');
+    el.textContent=ems[0|Math.random()*ems.length];
+    el.style.cssText=`position:fixed;pointer-events:none;z-index:9999;font-size:${1+Math.random()*1.1}rem;left:${Math.random()*100}vw;top:-30px;animation:fall ${1.4+Math.random()*1.5}s ease-in forwards;animation-delay:${Math.random()*.6}s`;
+    document.body.appendChild(el);
+    el.addEventListener('animationend',()=>el.remove());
+  }
+}
+const ks=document.createElement('style');
+ks.textContent='@keyframes fall{to{transform:translateY(110vh) rotate(540deg);opacity:0}}';
+document.head.appendChild(ks);
+
+function showView(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));$(id).classList.add('on')}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+// ── Boot ─────────────────────────────────────────
+window.addEventListener('load',()=>{
+  const p=getPayload();
+  if(p){initReveal(p)}else{showView('v-admin');render()}
+});
+$('ninput').addEventListener('keydown',e=>{if(e.key==='Enter')addName()});
+window.addEventListener('hashchange',()=>{
+  const p=getPayload();
+  if(p){initReveal(p)}else{showView('v-admin');render()}
+});
+</script>
+</body>
+</html>
